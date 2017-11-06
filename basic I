@@ -1,0 +1,122 @@
+# load libs
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import warnings
+warnings.filterwarnings('ignore') 
+from scipy import stats
+
+# read data
+df = pd.read_csv('...csv', header = 0, dtype={'Age': np.float64})
+
+# data type
+df.info()
+df.describe()
+
+# preview the data
+df.head()
+df.tail()
+
+# check missing
+df.isnull.values.sum()
+
+sns.heatmap(data.isnull(), yticklabels=False, cbar=False, cmap='viridis')
+data.isnull().sum()
+data.isnull().mean()
+
+# clean all the missings
+df = df.dropna()
+
+# For each categorical 
+# check counts and freq
+df['Pclass'].value_counts()
+
+print (df[['Pclass', 'Survived']].groupby(['Pclass'], as_index=False).mean())
+
+# mapping and replace
+df['QLF5r2'] = df['QLF5r2'].map({5:1, 4:1, 3:0, 2:0, 1:0}).astype(int)
+
+df['Title'] = df['Title'].replace(['Capt', 'Don', 'Rev', 'Jonkheer', 'Dona'], 'LowRare')
+df['Title'] = df['Title'].replace('Col', 'Master')
+
+# filled in missings
+df['Electrical'] = df['Electrical'].fillna(df['Electrical'].mode()[0]) 
+
+
+## For each continous
+# check mean and median
+df['Age'].describe()
+
+# binned to the categories
+df['CategoricalAge'] = pd.cut(df['Age'], 5)
+
+dataset.loc[ dataset['Fare'] <= 7.91, 'Fare'] = 0
+dataset.loc[(dataset['Fare'] > 7.91) & (dataset['Fare'] <= 14.454), 'Fare'] = 1
+dataset.loc[(dataset['Fare'] > 14.454) & (dataset['Fare'] <= 31), 'Fare']   = 2
+dataset.loc[ dataset['Fare'] > 31, 'Fare'] = 3
+dataset['Fare'] = dataset['Fare'].astype(int)
+    
+# create a group 
+def f(row):
+    if row['OBO'] <= 10:
+        val = 1
+    elif row['OBO'] > 10 and row['OBO'] <=50:
+        val = 2
+    elif row['OBO'] > 50 and row['OBO'] <=100:
+        val = 3
+    else:
+        val = 4
+    return val
+
+bo['Group'] = bo.apply(f, axis=1)
+
+# filled in missings
+df['Age'] = df['Age'].fillna(df['Age'].mean()) 
+df['Age'] = df['Age'].fillna(df['Age'].median()) 
+
+# Age
+fig, (axis1,axis2) = plt.subplots(1,2,figsize=(12,4))
+axis1.set_title('Original Age values - Titanic')
+axis2.set_title('New Age values - Titanic')
+# axis3.set_title('Original Age values - Test')
+# axis4.set_title('New Age values - Test')
+
+# get average, std, and number of NaN values in train
+average_age_train   = train["Age"].mean()
+std_age_train       = train["Age"].std()
+count_nan_age_train = train["Age"].isnull().sum()
+
+count_nan_age_test = test["Age"].isnull().sum()
+
+# generate random numbers between (mean - std) & (mean + std)
+rand_train = np.random.randint(average_age_train - std_age_train, average_age_train + std_age_train, size = count_nan_age_train)
+rand_test = np.random.randint(average_age_train - std_age_train, average_age_train + std_age_train, size = count_nan_age_test)
+
+# plot original Age values
+# NOTE: drop all null values, and convert to int
+train['Age'].dropna().astype(int).hist(bins=70, ax=axis1)
+# test['Age'].dropna().astype(int).hist(bins=70, ax=axis3)
+
+# fill NaN values in Age column with random values generated
+train["Age"][np.isnan(train["Age"])] = rand_train
+test["Age"][np.isnan(test["Age"])] = rand_test
+
+# convert from float to int
+train['Age'] = train['Age'].astype(int)
+test['Age']  = test['Age'].astype(int)
+        
+# plot new Age Values
+train['Age'].hist(bins=70, ax=axis2)
+# test_df['Age'].hist(bins=70, ax=axis4)
+
+# get dummy variables
+t_dummies  = pd.get_dummies(rs['genre'], prefix='genre')
+t_dummies.drop(['genre_DOCUMENTARY'], axis=1, inplace=True)
+rs = rs.join(t_dummies)
+rs.drop(['genre'], axis=1, inplace=True)
+
+# drop features
+drop_features = ['WD', 'mvname', 'studio']
+df.drop(drop_features, axis=1, inplace=True)
+
