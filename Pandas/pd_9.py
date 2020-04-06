@@ -40,6 +40,12 @@ df.dropna(thresh = df.shape[0]*0.6, how='all', axis=1)
 df.loc[:, df.isnull().mean() < 0.8]
 
 
+# Select all duplicate rows based on multiple column names in list
+df.drop_duplicates(['A','B'], keep= 'last', inplace = True)
+# dropping duplicate values 
+df.drop_duplicates(keep = False, inplace = True) 
+
+
 # filling
 df.fillna('Miss', inplace = False)
 
