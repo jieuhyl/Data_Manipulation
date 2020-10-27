@@ -31,3 +31,5 @@ df_schema
 # see all the data
 pd.set_option('display.max_rows', 85)
 pd.set_option('display.max_columns', 85)
+
+pd.set_option('display.expand_frame_repr', False)
